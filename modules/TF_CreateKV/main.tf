@@ -3,8 +3,9 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "KV" {
-  name                        = "${var.prefix}TFKV"
-  location                   = var.location
+  count                       = 2
+  name                        = "${var.prefix}TFKV${count.index}"
+  location                    = var.location
   resource_group_name         = var.rgname
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
